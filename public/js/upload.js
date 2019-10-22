@@ -28,7 +28,7 @@
             btn.addEventListener('click', function() {
                 let fd = new FormData();
                 fd.append('image', ff);
-                let req = new Request('/', {
+                let req = new Request('./', {
                     method: 'POST',
                     body: fd
                 });

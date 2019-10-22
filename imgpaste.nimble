@@ -11,4 +11,4 @@ bin           = @["imgpaste", "cull"]
 # Dependencies
 
 requires "nim >= 0.19.4"
-requires "jester >= 0.4.1"
+requires "jester"
