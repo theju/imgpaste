@@ -1,5 +1,5 @@
 (function() {
-    function upload(ev) {
+    function upload(file) {
         if (document.querySelector('h1')) {
             document.querySelector('h1').remove();
         }
@@ -10,15 +10,13 @@
             document.querySelector('input[type=button]').remove();
         }
 
-        let dt = ev.dataTransfer;
-        if (ev.type === 'paste') {
-            dt = ev.clipboardData;
+        if (document.querySelector('input[type=file]')) {
+            document.querySelector('input[type=file]').remove();
         }
-        let it = dt.items[0];
-        if (it.type.match(/^image\//)) {
-            let ff = it.getAsFile();
+
+        if (file.type.match(/^image\//)) {
             let img = document.createElement('img');
-            img.src = URL.createObjectURL(ff);
+            img.src = URL.createObjectURL(file);
             document.body.appendChild(img);
 
             let btn = document.createElement('input');
@@ -27,7 +25,7 @@
             btn.classList.add('upload');
             btn.addEventListener('click', function() {
                 let fd = new FormData();
-                fd.append('image', ff);
+                fd.append('image', file);
                 let req = new Request('./', {
                     method: 'POST',
                     body: fd
@@ -42,7 +40,10 @@
         }
     };
 
-    document.addEventListener('paste', upload);
+    document.addEventListener('paste', function(ev) {
+        let file = ev.clipboardData.items[0].getAsFile();
+        upload(file);
+    });
 
     document.querySelector('.full-div').addEventListener('dragenter', function(ev) {
         ev.preventDefault();
@@ -59,6 +60,14 @@
     document.querySelector('.full-div').addEventListener('drop', function(ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        upload(ev);
+        let file = ev.dataTransfer.items[0].getAsFile();
+        upload(file);
+    });
+
+    document.querySelector('.upload_file input[type=file]').addEventListener('change', function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        let file = this.files[0];
+        upload(file);
     });
 })();

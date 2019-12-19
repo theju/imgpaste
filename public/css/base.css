@@ -15,6 +15,15 @@ h1 {
     top: 0;
 }
 
+.upload_file {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    text-align: center;
+    z-index: 2;
+}
+
 .upload {
     position: absolute;
     top: 0;
