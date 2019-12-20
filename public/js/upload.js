@@ -24,6 +24,7 @@
             btn.value = 'Upload';
             btn.classList.add('upload');
             btn.addEventListener('click', function() {
+                btn.setAttribute('disabled', 'disabled');
                 let fd = new FormData();
                 fd.append('image', file);
                 let req = new Request('./', {
@@ -34,6 +35,8 @@
                     if (response.ok === true) {
                         window.location.href = response.url;
                     }
+                }).finally(function() {
+                    btn.removeAttribute('disabled');
                 });
             });
             document.body.appendChild(btn);
